@@ -1,6 +1,6 @@
 # EECS 16B Self-Grade Bot
 
-## For lazy EECS/CS students who don't want to do their weekly self-grade after spending 30 hours on the homework
+### For lazy EECS/CS students who don't want to do their weekly self-grade after spending 30 hours on the homework
 
 Instructions:
 
