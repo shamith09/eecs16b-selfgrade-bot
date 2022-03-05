@@ -12,6 +12,13 @@ Install requirements:
 
 `pip install -r requirements`
 
+Follow instructions on the Splinter website to install the Chrome webdriver:
+https://splinter.readthedocs.io/en/latest/drivers/chrome.html
+
 Run main.py:
 
 `python3 main.py`
+
+When the console tells you to switch between browser and terminal, DO IT ASAP.
+The program will not work if you are in the terminal while Python is controlling your browser.
+
