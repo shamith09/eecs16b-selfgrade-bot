@@ -2,22 +2,25 @@ from time import sleep
 from splinter import Browser
 from random import shuffle
 import pyautogui
+import json
 
 print('\nHello! I am the EECS 16B self-grade bot, made by a lazy CS & Physics major named Shamith Pasula.')
 print('I will be doing your self-grade for you, giving you 8/10 on some questions to not be sus.')
 print('The comments for the 8/10 questions are in main.py, edit them if you wish.')
 print('If you mess up or want to restart, press Ctrl+C and I will restart. \n')
 
+data_dict = {}
+
 # params
 while True:
     try:
         print('I have a few questions for you:\n')
 
-        name = input('What is your full name (First Last)? ').strip()
-        sid = int(input('What is your SID? ').strip())
-        email = input('What is your @berkeley.edu email?: ').strip()
-        while (email[-13:] != '@berkeley.edu'):
-            email = input('Please enter a valid @berkeley.edu email address: ')
+        data_dict['name'] = input('What is your full name (First Last)? ').strip()
+        data_dict['sid'] = int(input('What is your SID? ').strip())
+        data_dict['email'] = input('What is your @berkeley.edu email?: ').strip()
+        while (data_dict['email'][-13:] != '@berkeley.edu'):
+            data_dict['email'] = input('Please enter a valid @berkeley.edu email address: ')
         print()
 
         hw_number = int(input('Which homework are you self-grading? ').strip())
@@ -44,6 +47,9 @@ while True:
     except ValueError:
         print('ERROR: Bad input. Restarting.\n')
 
+with open('data.json', 'w') as data:
+    data.write(json.dumps(data_dict))
+
 print()
 for i in range(5):
     print(f'A new Google Chrome window will open in a new window in {5 - i} seconds. Navigate back to your terminal once it opens to continue.', end = '\r')
@@ -56,9 +62,9 @@ with Browser('chrome') as browser:
 
     url = f'http://www.eecs16b.org/self-grade-{hw_number}.html'
     browser.visit(url)
-    browser.find_by_id('name').fill(name)
-    browser.find_by_id('email').fill(email)
-    browser.find_by_id('sid').fill(sid)
+    browser.find_by_id('name').fill(data_dict['name'])
+    browser.find_by_id('email').fill(data_dict['email'])
+    browser.find_by_id('sid').fill(data_dict['sid'])
     browser.find_by_value(resubmission).click()
 
     inputs = browser.find_by_value('Comment')
