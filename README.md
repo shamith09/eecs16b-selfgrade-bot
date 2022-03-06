@@ -14,7 +14,7 @@ Go into the repo folder:
 Install Python:
 https://www.python.org/downloads/
 ---------
-####Optional: Use a virtual environment to keep dependencies in the cloned repository:
+#### Optional: Use a virtual environment to keep dependencies in the cloned repository:
 Install virtualenv:
 `pip install virtualenv`
 
