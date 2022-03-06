@@ -22,6 +22,7 @@ Install virtualenv:
 Initialize the virtualenv and activate it:
 `python3 -m venv env
 source env/bin/activate`
+
 ---------
 
 Install requirements:
