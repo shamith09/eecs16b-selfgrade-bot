@@ -11,7 +11,7 @@ yellow = csi + '33;1m'
 cyan = csi + '36;1m'
 end = csi + '0m'
 
-print('\nHello! I am the EECS 16B self-grade bot, made by a lazy CS & Physics major named Shamith Pasula.')
+print('\nHello! My name is 16Bot, made by a lazy CS & Physics major named Shamith Pasula.')
 print('I will be doing your self-grade for you, giving you 8/10 on some questions to not be sus.')
 print('The comments for the 8/10 questions are in main.py, edit them if you wish.')
 print('If this isn\'t your first time meeting me and you want to update your data, delete data.json and run main.py again.')
