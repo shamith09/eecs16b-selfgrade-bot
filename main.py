@@ -2,6 +2,7 @@ from fileinput import close
 from time import sleep
 from splinter import Browser
 from random import shuffle
+from platform import system
 import pyautogui
 import json
 
@@ -11,8 +12,10 @@ yellow = csi + '33;1m'
 cyan = csi + '36;1m'
 end = csi + '0m'
 
+cmd_alt = 'command' if system() == 'Darwin' else 'alt'
+
 print('\nHello! My name is 16Bot, made by a lazy CS & Physics major named Shamith Pasula.')
-print('I will be doing your self-grade for you, giving you 8/10 on some questions to not be sus.')
+print('I will be doing your self-grade for you, giving you 8/10 on random questions to not be sus.')
 print('The comments for the 8/10 questions are in main.py, edit them if you wish.')
 print('If this isn\'t your first time meeting me and you want to update your data, delete data.json and run main.py again.')
 print('If you mess up or want to restart, press Ctrl+C and run main.py again. \n')
@@ -71,12 +74,11 @@ while True:
 
 print()
 for i in range(5):
-    print(f'{cyan}A new Google Chrome window will open in a new window in {5 - i} seconds. Navigate back to your terminal once it opens to continue.{end}', end = '\r')
+    print(f'{cyan}A new Google Chrome window will open in a new window in {5 - i} seconds. I will navigate back to the terminal to ask you one last question.{end}', end = '\r')
     sleep(1)
 print('\nOpening now...')
 
 with Browser('chrome') as browser:
-    # code
     difficulty = str(difficulty)
 
     url = f'http://www.eecs16b.org/self-grade-{hw_number}.html'
@@ -94,17 +96,24 @@ with Browser('chrome') as browser:
 
     print(f'There are {len(indices)} questions on this HW.')
     print()
+
+    pyautogui.keyDown(cmd_alt)
+    pyautogui.press('tab')
+    pyautogui.keyUp(cmd_alt)
+
     num_incorrects = int(input('How many questions out of these do you want to give an 8/10? ').strip())
     print('I will now do your self-grade for you! I\'ll mark random questions as 8/10 and the rest as 10/10.')
-    print(yellow + '\nIMPORTANT: Please navigate back to the Chrome window in the next 5 seconds so I can do your self-grade!' + end)
-    print(cyan + 'You can do this by using ⌘+Tab on Mac and Alt+Tab on Windows.' + end)
-
+    print(yellow + 'IMPORTANT: Do not touch the keyboard or mouse until I am done.' + end)
 
     print()
     for i in range(5):
         print(f'{cyan}Beginning self-grade in {5 - i} seconds.{end}', end='\r')
         sleep(1)
     print('\nSelf-grading now...')
+
+    pyautogui.keyDown(cmd_alt)
+    pyautogui.press('tab')
+    pyautogui.keyUp(cmd_alt)
 
     # EDIT THIS list TO ADD/CHANGE COMMENTS
     #
@@ -118,7 +127,6 @@ with Browser('chrome') as browser:
     for i in indices[:-num_incorrects]:
         browser.find_by_value('10')[i].click()
 
-    sleep(2)
     counter = 0
     for i in indices[-num_incorrects:]:
         browser.find_by_value('8')[i].click()
@@ -136,4 +144,5 @@ with Browser('chrome') as browser:
 
     sleep(3)
 
+print()
 print('Submit the downloaded .json file to Gradescope and you\'re done! Have a great day!')

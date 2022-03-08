@@ -42,3 +42,6 @@ Run main.py:
 When the console tells you to switch between browser and terminal, DO IT ASAP.
 The program will not work if you are in the terminal while Python is controlling your browser.
 
+If you want to uninstall all the required dependencies that were installed, run:
+
+`pip uninstall -r requirements -y`
