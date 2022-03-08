@@ -23,6 +23,7 @@ print('If you mess up or want to restart, press Ctrl+C and run main.py again. \n
 data_dict = {}
 
 def get_data():
+    print('Because this is the first time I met you, I need some of your information.\n')
     data_dict['name'] = input('What is your full name (First Last)? ').strip()
     data_dict['sid'] = int(input('What is your SID? ').strip())
     data_dict['email'] = input('What is your @berkeley.edu email?: ').strip()
@@ -37,7 +38,7 @@ def get_data():
 try:
     data_dict = open('data.json', 'r')
     data_dict = json.load(data_dict)
-    print('I have your name, email, and SID already!')
+    print('I have your name, email, and SID already!\n')
 except:
     while True:
         try:
