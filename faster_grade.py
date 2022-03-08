@@ -6,6 +6,9 @@ from platform import system
 import pyautogui
 import json
 
+# Default comments
+default_comments = ['Calculation error', 'Misread question']
+
 csi = '\x1B['
 red = csi + '31;1m'
 yellow = csi + '33;1m'
@@ -16,11 +19,9 @@ cmd_alt = 'command' if system() == 'Darwin' else 'alt'
 
 print('\nHello! My name is 16Bot, made by a lazy CS & Physics major named Shamith Pasula.')
 print('I will be doing your self-grade for you, giving you 8/10 on random questions to not be sus.')
-print('The comments for the 8/10 questions are in main.py, edit them if you wish.')
-print('If this isn\'t your first time meeting me and you want to update your data, delete data.json and run main.py again.')
-print('If you mess up or want to restart, press Ctrl+C and run main.py again. \n')
-
-data_dict = {}
+print('The comments for the 8/10 questions are in data.json, edit them if you wish.')
+print('If this isn\'t your first time meeting me and you want to update your data, delete data.json and run faster_grade.py again.')
+print('If you mess up or want to restart, press Ctrl+C and run faster_grade.py again. \n')
 
 def get_data():
     print('Because this is the first time I met you, I need some of your information.\n')
@@ -30,7 +31,7 @@ def get_data():
     while (data_dict['email'][-13:] != '@berkeley.edu'):
         data_dict['email'] = input('Please enter a valid @berkeley.edu email address: ')
     print()
-
+    data_dict['comments'] = default_comments
     with open('data.json', 'w') as data:
         data.write(json.dumps(data_dict))
 
@@ -38,6 +39,10 @@ def get_data():
 try:
     data_dict = open('data.json', 'r')
     data_dict = json.load(data_dict)
+    if 'comments' not in data_dict:
+        data_dict['comments'] = default_comments
+        with open('data.json', 'w') as data:
+            data.write(json.dumps(data_dict))
     print('I have your name, email, and SID already!\n')
 except:
     while True:
@@ -91,16 +96,16 @@ with Browser('chrome') as browser:
 
     browser.find_by_value(resubmission).click()
 
+    pyautogui.keyDown(cmd_alt)
+    pyautogui.press('tab')
+    pyautogui.keyUp(cmd_alt)
+
     inputs = browser.find_by_value('Comment')
     indices = list(range(len(inputs)))
     shuffle(indices)
 
     print(f'There are {len(indices)} questions on this HW.')
     print()
-
-    pyautogui.keyDown(cmd_alt)
-    pyautogui.press('tab')
-    pyautogui.keyUp(cmd_alt)
 
     num_incorrects = int(input('How many questions out of these do you want to give an 8/10? ').strip())
     print('I will now do your self-grade for you! I\'ll mark random questions as 8/10 and the rest as 10/10.')
@@ -122,8 +127,8 @@ with Browser('chrome') as browser:
     # so add as many as you like!
     comments = ['Calculation error', 'Misread question']
 
-    q, r = divmod(num_incorrects, len(comments))
-    comments = q * comments + comments[:r]
+    q, r = divmod(num_incorrects, len(data_dict['comments']))
+    comments = q * data_dict['comments'] + data_dict['comments'][:r]
 
     for i in indices[:-num_incorrects]:
         browser.find_by_value('10')[i].click()

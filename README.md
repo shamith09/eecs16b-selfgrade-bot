@@ -35,9 +35,9 @@ Install requirements:
 Follow instructions on the Splinter website to install the Chrome webdriver:
 https://splinter.readthedocs.io/en/latest/drivers/chrome.html
 
-Run main.py:
+Run faster_grade.py:
 
-`python3 main.py`
+`python3 faster_grade.py`
 
 DO NOT touch the keyboard or mouse when 16Bot tells you not to. 16Bot controls your computer when self-grading, so if you mess it up, it may do random stuff on your computer. It's unlikely this will cause serious damage to your computer, but please listen to 16Bot.
 
