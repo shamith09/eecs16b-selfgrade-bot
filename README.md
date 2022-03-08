@@ -39,8 +39,7 @@ Run main.py:
 
 `python3 main.py`
 
-When the console tells you to switch between browser and terminal, DO IT ASAP.
-The program will not work if you are in the terminal while Python is controlling your browser.
+DO NOT touch the keyboard or mouse when 16Bot tells you not to. 16Bot controls your computer when self-grading, so if you mess it up, it may do random stuff on your computer. It's unlikely this will cause serious damage to your computer, but please listen to 16Bot.
 
 If you want to uninstall all the required dependencies that were installed, run:
 
