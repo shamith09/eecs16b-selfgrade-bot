@@ -48,7 +48,7 @@ try:
         data_dict['comments'] = default_comments
         with open('data.json', 'w') as data:
             data.write(json.dumps(data_dict))
-    if 'course' not in data_dict:
+    if 'class' not in data_dict:
         print('Which class are you taking? Enter the number corresponding to your answer:')
         print('1) EECS 16A')
         print('2) EECS 16B')
