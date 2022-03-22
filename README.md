@@ -32,9 +32,6 @@ Install requirements:
 
 `pip install -r requirements`
 
-Follow instructions on the Splinter website to install the Chrome webdriver:
-https://splinter.readthedocs.io/en/latest/drivers/chrome.html
-
 Run faster_grade.py:
 
 `python3 faster_grade.py`
