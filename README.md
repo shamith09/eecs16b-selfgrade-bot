@@ -44,3 +44,10 @@ DO NOT touch the keyboard or mouse when 16Bot tells you not to. 16Bot controls y
 If you want to uninstall all the required dependencies that were installed, run:
 
 `pip uninstall -r requirements -y`
+
+---------
+To edit your data (email, 16A vs 16B, etc.) open data.json and change the data as you wish, or alternatively, delete data.json using:
+
+`rm -rf data.json`
+
+and run faster_grade.py again so that 16Bot can ask you for your information again.

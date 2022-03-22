@@ -18,7 +18,7 @@ end = csi + '0m'
 cmd_alt = 'command' if system() == 'Darwin' else 'alt'
 
 print('\nHello! My name is 16Bot, made by a lazy CS & Physics major named Shamith Pasula.')
-print('I will be doing your self-grade for you, giving you 8/10 on random questions to not be sus.')
+print('I will be doing your 16A or 16B self-grade for you, giving you 8/10 on random questions to not be sus.')
 print('The comments for the 8/10 questions are in data.json, edit them if you wish.')
 print('If this isn\'t your first time meeting me and you want to update your data, delete data.json and run faster_grade.py again.')
 print('If you mess up or want to restart, press Ctrl+C and run faster_grade.py again. \n')
@@ -31,7 +31,12 @@ def get_data():
     while (data_dict['email'][-13:] != '@berkeley.edu'):
         data_dict['email'] = input('Please enter a valid @berkeley.edu email address: ')
     print()
+    print('Which class are you taking? Enter the number corresponding to your answer:')
+    print('1) EECS 16A')
+    print('2) EECS 16B')
+    data_dict['class'] = '16a' if input('Enter answer here: ').strip() == '1' else '16b'
     data_dict['comments'] = default_comments
+
     with open('data.json', 'w') as data:
         data.write(json.dumps(data_dict))
 
@@ -43,7 +48,14 @@ try:
         data_dict['comments'] = default_comments
         with open('data.json', 'w') as data:
             data.write(json.dumps(data_dict))
-    print('I have your name, email, and SID already!\n')
+    if 'course' not in data_dict:
+        print('Which class are you taking? Enter the number corresponding to your answer:')
+        print('1) EECS 16A')
+        print('2) EECS 16B')
+        data_dict['class'] = '16A' if input('Enter answer here: ').strip() == '1' else '16B'
+        with open('data.json', 'w') as data:
+            data.write(json.dumps(data_dict))
+    print('\nI have your name, email, and SID already!\n')
 except:
     while True:
         try:
@@ -61,10 +73,11 @@ while True:
         else:
             hw_number = str(hw_number)
 
-        resubmission = None
-        while (resubmission != 'Y' and resubmission != 'N'):
-            resubmission = input('Is this a resubmission (Enter Y or N)? ').strip().upper()
-        resubmission = 'yes' if resubmission == 'Y' else 'no'
+        if data_dict['class'] == '16b':
+            resubmission = 'no'
+            while (resubmission != 'Y' and resubmission != 'N'):
+                resubmission = input('Is this a resubmission (Enter Y or N)? ').strip().upper()
+            resubmission = 'yes' if resubmission == 'Y' else 'no'
 
         difficulty = int(input(f'How difficult was HW {hw_number} (Enter an integer between 1-10)? ').strip())
         hours_spent = int(input(f'How many hours did you spend on HW {hw_number}? ').strip())
@@ -86,15 +99,15 @@ print('\nOpening now...')
 
 with Browser('chrome') as browser:
     difficulty = str(difficulty)
-
-    url = f'http://www.eecs16b.org/self-grade-{hw_number}.html'
+    url = f'http://www.eecs{data_dict["class"]}.org/self-grade-{hw_number}.html'
     browser.visit(url)
     browser.find_by_id('name').fill(data_dict['name'])
     browser.find_by_id('email').fill(data_dict['email'])
     browser.find_by_id('sid').fill(data_dict['sid'])
     close()
 
-    browser.find_by_value(resubmission).click()
+    if data_dict['class'] == '16b':
+        browser.find_by_value(resubmission).click()
 
     pyautogui.keyDown(cmd_alt)
     pyautogui.press('tab')
