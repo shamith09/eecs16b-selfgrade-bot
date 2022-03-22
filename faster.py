@@ -3,7 +3,7 @@ from time import sleep
 from splinter import Browser
 from random import shuffle
 from platform import system
-import pyautogui
+from pyautogui import press, keyDown, keyUp, write
 import json
 
 # Default comments
@@ -20,8 +20,8 @@ cmd_alt = 'command' if system() == 'Darwin' else 'alt'
 print('\nHello! My name is 16Bot, made by a lazy CS & Physics major named Shamith Pasula.')
 print('I will be doing your 16A or 16B self-grade for you, giving you 8/10 on random questions to not be sus.')
 print('The comments for the 8/10 questions are in data.json, edit them if you wish.')
-print('If this isn\'t your first time meeting me and you want to update your data, delete data.json and run faster_grade.py again.')
-print('If you mess up or want to restart, press Ctrl+C and run faster_grade.py again. \n')
+print('If this isn\'t your first time meeting me and you want to update your data, delete data.json and run faster.py again.')
+print('If you mess up or want to restart, press Ctrl+C and run faster.py again. \n')
 
 def get_data():
     print('Because this is the first time I met you, I need some of your information.\n')
@@ -39,6 +39,11 @@ def get_data():
 
     with open('data.json', 'w') as data:
         data.write(json.dumps(data_dict))
+
+def alt_tab():
+    keyDown(cmd_alt)
+    press('tab')
+    keyUp(cmd_alt)
 
 # params
 try:
@@ -99,19 +104,20 @@ print('\nOpening now...')
 
 with Browser('chrome') as browser:
     difficulty = str(difficulty)
-    url = f'http://www.eecs{data_dict["class"]}.org/self-grade-{hw_number}.html'
+    try:
+        url = f'http://www.eecs{data_dict["class"]}.org/self-grade-{hw_number}.html'
+    except:
+        print(f'{red}ERROR: Self-grade for this HW has either not released yet or this HW doesn\'t exist. Restarting.')
     browser.visit(url)
-    browser.find_by_id('name').fill(data_dict['name'])
-    browser.find_by_id('email').fill(data_dict['email'])
-    browser.find_by_id('sid').fill(data_dict['sid'])
+
+    for s in ['name', 'email', 'sid']:
+        browser.find_by_id(s).fill(data_dict[s])
     close()
 
     if data_dict['class'] == '16b':
         browser.find_by_value(resubmission).click()
 
-    pyautogui.keyDown(cmd_alt)
-    pyautogui.press('tab')
-    pyautogui.keyUp(cmd_alt)
+    alt_tab()
 
     inputs = browser.find_by_value('Comment')
     indices = list(range(len(inputs)))
@@ -130,22 +136,18 @@ with Browser('chrome') as browser:
         sleep(1)
     print('\nSelf-grading now...')
 
-    pyautogui.keyDown(cmd_alt)
-    pyautogui.press('tab')
-    pyautogui.keyUp(cmd_alt)
-    
+    alt_tab()
+
     q, r = divmod(num_incorrects, len(data_dict['comments']))
-    comments = q * data_dict['comments'] + data_dict['comments'][:r]
+    comments = iter(q * data_dict['comments'] + data_dict['comments'][:r])
 
     for i in indices[:-num_incorrects]:
         browser.find_by_value('10')[i].click()
 
-    counter = 0
     for i in indices[-num_incorrects:]:
         browser.find_by_value('8')[i].click()
-        pyautogui.keyDown('tab')
-        pyautogui.write(comments[counter])
-        counter += 1
+        keyDown('tab')
+        write(next(comments))
 
         
     browser.find_by_id('d' + difficulty).click()
@@ -158,4 +160,4 @@ with Browser('chrome') as browser:
     sleep(3)
 
 print()
-print('Submit the downloaded .json file to Gradescope and you\'re done! Have a great day!')
+print('Submit the downloaded .json file to Gradescope and you\'re done! Have a great day!\n')
