@@ -17,7 +17,7 @@ Clone the repo:
 
 Go into the repo folder:
 
-`cd eecs16b-selfgrade-bot`
+`cd eecs16bot`
 
 Install Python:
 https://www.python.org/downloads/
