@@ -2,48 +2,19 @@ from fileinput import close
 from time import sleep
 from splinter import Browser
 from random import shuffle
-from platform import system
-from pyautogui import press, keyDown, keyUp, write
+from pyautogui import keyDown, write
 import json
+
+from utils import *
 
 # Default comments
 default_comments = ['Calculation error', 'Misread question']
-
-csi = '\x1B['
-red = csi + '31;1m'
-yellow = csi + '33;1m'
-cyan = csi + '36;1m'
-end = csi + '0m'
-
-cmd_alt = 'command' if system() == 'Darwin' else 'alt'
 
 print('\nHello! My name is 16Bot, made by a lazy CS & Physics major named Shamith Pasula.')
 print('I will be doing your 16A or 16B self-grade for you, giving you 8/10 on random questions to not be sus.')
 print('The comments for the 8/10 questions are in data.json, edit them if you wish.')
 print('If this isn\'t your first time meeting me and you want to update your data, delete data.json and run faster.py again.')
 print('If you mess up or want to restart, press Ctrl+C and run faster.py again. \n')
-
-def get_data():
-    print('Because this is the first time I met you, I need some of your information.\n')
-    data_dict['name'] = input('What is your full name (First Last)? ').strip()
-    data_dict['sid'] = int(input('What is your SID? ').strip())
-    data_dict['email'] = input('What is your @berkeley.edu email?: ').strip()
-    while (data_dict['email'][-13:] != '@berkeley.edu'):
-        data_dict['email'] = input('Please enter a valid @berkeley.edu email address: ')
-    print()
-    print('Which class are you taking? Enter the number corresponding to your answer:')
-    print('1) EECS 16A')
-    print('2) EECS 16B')
-    data_dict['class'] = '16a' if input('Enter answer here: ').strip() == '1' else '16b'
-    data_dict['comments'] = default_comments
-
-    with open('data.json', 'w') as data:
-        data.write(json.dumps(data_dict))
-
-def alt_tab():
-    keyDown(cmd_alt)
-    press('tab')
-    keyUp(cmd_alt)
 
 # params
 try:
@@ -65,7 +36,7 @@ except:
     while True:
         try:
             print('I have a few questions for you:\n')
-            get_data()
+            get_data(data_dict, default_comments)
             break
         except ValueError:
             print(red + '\nERROR: Bad input. Restarting.\n' + end)
@@ -128,6 +99,7 @@ with Browser('chrome') as browser:
 
     num_incorrects = int(input('How many questions out of these do you want to give an 8/10? ').strip())
     print('I will now do your self-grade for you! I\'ll mark random questions as 8/10 and the rest as 10/10.')
+
     print(yellow + 'IMPORTANT: Do not touch the keyboard or mouse until I am done.' + end)
 
     print()
