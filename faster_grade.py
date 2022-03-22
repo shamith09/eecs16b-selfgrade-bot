@@ -133,13 +133,7 @@ with Browser('chrome') as browser:
     pyautogui.keyDown(cmd_alt)
     pyautogui.press('tab')
     pyautogui.keyUp(cmd_alt)
-
-    # EDIT THIS list TO ADD/CHANGE COMMENTS
-    #
-    # There is no limit to the number of comments you can add,
-    # so add as many as you like!
-    comments = ['Calculation error', 'Misread question']
-
+    
     q, r = divmod(num_incorrects, len(data_dict['comments']))
     comments = q * data_dict['comments'] + data_dict['comments'][:r]
 
