@@ -30,6 +30,8 @@ def ask_user(default_comments):
     try:
         with open('bin/data.json', 'r') as djson:
             data_dict = load(djson)
+        if not all(k in data_dict for k in ('name', 'sid', 'email')):
+            raise Exception
         if 'comments' not in data_dict:
             data_dict['comments'] = default_comments
             with open('data.json', 'w') as data:
@@ -38,7 +40,11 @@ def ask_user(default_comments):
             print('Which class are you taking? Enter the number corresponding to your answer:')
             print('1) EECS 16A')
             print('2) EECS 16B')
-            data_dict['class'] = '16A' if input('Enter answer here: ').strip() == '1' else '16B'
+            arg = input('Enter answer here: ').strip()
+            while not (arg == '1' or arg == '2'):
+                print(f'{red}Please enter 1 or 2.{end}')
+                arg = input('Enter the number corresponding to your answer: ').strip()
+            data_dict['class'] = '16B' if arg == '2' else '16A'
             with open('data.json', 'w') as data:
                 data.write(dumps(data_dict))
             print()
@@ -46,14 +52,13 @@ def ask_user(default_comments):
     except:
         while True:
             try:
-                print('I have a few questions for you:\n')
+                print('I have a few questions for you since I don\'t have all of your information:\n')
                 return get_data(default_comments)
             except ValueError:
                 print(red + '\nERROR: Bad input. Restarting.\n' + end)
     return data_dict
 
 def get_data(default_comments):
-    print('Because this is the first time I met you, I need some of your information.\n')
     d = {
         'name': input('What is your full name (First Last)? ').strip(),
         'sid': int(input('What is your SID? ').strip()),
@@ -66,15 +71,19 @@ def get_data(default_comments):
     print('Which class are you taking? Enter the number corresponding to your answer:')
     print('1) EECS 16A')
     print('2) EECS 16B')
+    arg = input('Enter answer here: ').strip()
+    while not (arg == '1' or arg == '2'):
+        print(f'{red}Please enter 1 or 2.{end}')
+        arg = input('Enter the number corresponding to your answer: ').strip()
 
     d.update({
-        'class': '16B' if input('Enter answer here: ').strip() == '2' else '16A',
+        'class': '16B' if arg == '2' else '16A',
         'comments': default_comments
     })
 
     with open('bin/data.json', 'w') as data:
         data.write(dumps(d))
-    
+    print()
     return d
 
 def more_qs(data_dict):
@@ -93,8 +102,13 @@ def more_qs(data_dict):
                     data_dict['resubmission'] = input('Is this a resubmission (Enter Y or N)? ').strip().upper()
                 data_dict['resubmission'] = 'yes' if data_dict['resubmission'] == 'Y' else 'no'
 
+            arg = int(input(f'How difficult was HW {data_dict["hwNum"]} (Enter an integer between 1-10, inclusive)? ').strip())
+            while not (1 <= arg <= 10):
+                print(f'{red}Please enter a number between 1 and 10, inclusive.{end}')
+                arg = int(input(f'How difficult was HW {data_dict["hwNum"]} (Enter an integer between 1-10, inclusive)? ').strip())
+            
             data_dict.update({
-                'Problem Set Difficulty': str(int(input(f'How difficult was HW {data_dict["hwNum"]} (Enter an integer between 1-10)? ').strip())),
+                'Problem Set Difficulty': str(arg),
                 'Hours Spent': str(int(input(f'How many hours did you spend on HW {data_dict["hwNum"]}? ').strip())),
                 'Teammate Headcount': str(int(input('How many people did you work with? ').strip())),
                 'Attended HW Party': input('Did you go to HW party (Enter Y or N)? ').strip().upper()
