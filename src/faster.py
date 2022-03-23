@@ -1,8 +1,4 @@
-from fileinput import close
-from time import sleep
-from splinter import Browser
 from random import shuffle
-from pyautogui import keyDown, write
 import json
 
 from utils import *

@@ -1,5 +1,4 @@
-import json
-import re
+import json, re
 from pyautogui import press, keyDown, keyUp
 from platform import system
 from time import sleep

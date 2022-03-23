@@ -1,6 +1,4 @@
-from splinter import Browser
 import json
-import re
 
 from utils import *
 
