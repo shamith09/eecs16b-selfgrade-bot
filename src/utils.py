@@ -1,12 +1,9 @@
-import json, re
-from keyboard import press_and_release
+from json import load, dumps
 from platform import system
-from time import sleep
-from splinter import Browser
-from fileinput import close
+from re import findall
+from requests import get
 
 cmd_alt = 'command' if system() == 'Darwin' else 'alt'
-wait_time = 3
 
 csi = '\x1B['
 red = csi + '31;1m'
@@ -25,21 +22,21 @@ def greet():
 
 def ask_user(default_comments):
     try:
-        data_dict = open('bin/data.json', 'r')
-        data_dict = json.load(data_dict)
+        with open('bin/data.json', 'r') as djson:
+            data_dict = load(djson)
         if 'comments' not in data_dict:
             data_dict['comments'] = default_comments
             with open('data.json', 'w') as data:
-                data.write(json.dumps(data_dict))
+                data.write(dumps(data_dict))
         if 'class' not in data_dict:
             print('Which class are you taking? Enter the number corresponding to your answer:')
             print('1) EECS 16A')
             print('2) EECS 16B')
             data_dict['class'] = '16A' if input('Enter answer here: ').strip() == '1' else '16B'
             with open('data.json', 'w') as data:
-                data.write(json.dumps(data_dict))
+                data.write(dumps(data_dict))
             print()
-        print('I have your name, email, and SID already!\n')
+        print(f'I have your name, email, and SID already! I will grade your {data_dict["class"]} homework.\n')
     except:
         while True:
             try:
@@ -65,12 +62,12 @@ def get_data(default_comments):
     print('2) EECS 16B')
 
     d.update({
-        'class': '16a' if input('Enter answer here: ').strip() == '1' else '16b',
+        'class': '16B' if input('Enter answer here: ').strip() == '2' else '16A',
         'comments': default_comments
     })
 
     with open('data.json', 'w') as data:
-        data.write(json.dumps(d))
+        data.write(dumps(d))
     
     return d
 
@@ -83,9 +80,10 @@ def more_qs(data_dict):
             else:
                 data_dict['hwNum'] = str(data_dict['hwNum'])
 
-            if data_dict['class'] == '16b':
-                data_dict['resubmission'] = 'no'
+            if data_dict['class'] == '16B':
+                data_dict['resubmission'] = input('Is this a resubmission (Enter Y or N)? ').strip().upper()
                 while (data_dict['resubmission'] != 'Y' and data_dict['resubmission'] != 'N'):
+                    print(f'{red}Please enter Y or N.{end}')
                     data_dict['resubmission'] = input('Is this a resubmission (Enter Y or N)? ').strip().upper()
                 data_dict['resubmission'] = 'yes' if data_dict['resubmission'] == 'Y' else 'no'
 
@@ -102,30 +100,20 @@ def more_qs(data_dict):
             break
         except ValueError:
             print(red + '\nERROR: Bad input. Restarting.\n' + end)
-        close()
-
-def alt_tab():
-    press_and_release(cmd_alt, 'tab')
 
 def get_inputs(data_dict):
     print()
-    for i in range(wait_time):
-        print(f'{cyan}A new Google Chrome window will open in a new window in {wait_time - i} seconds, then I will navigate back to the terminal.{end}', end = '\r')
-        sleep(1)
-    print('\nOpening now...')
+    html = get(f'http://www.eecs{data_dict["class"]}.org/self-grade-{data_dict["hwNum"]}.html').text
+    inputs = findall(r'<!-- Question (.*)\) -->', html)
+    if not inputs:
+        print(f'{red}ERROR: Self-grade for this HW has either not released yet or this HW doesn\'t exist. Restarting.{end}')
+    return inputs
 
-    with Browser('chrome') as browser:
-        try:
-            url = f'http://www.eecs{data_dict["class"]}.org/self-grade-{data_dict["hwNum"]}.html'
-        except:
-            print(f'{red}ERROR: Self-grade for this HW has either not released yet or this HW doesn\'t exist. Restarting.{end}')
-        browser.visit(url)
-        alt_tab()
-        inputs = browser.find_by_value('Comment')
-
-        parts = [re.search(r'q(.+)-comment', el['for']).group(1) for el in inputs]
-    
-    return parts
+def init(default_comments):
+    d = ask_user(default_comments)
+    more_qs(d)
+    parts = get_inputs(d)
+    return d, parts
 
 def get_parts(prompt, parts):
     p = input(prompt).strip().split(' ')
@@ -138,9 +126,19 @@ def infinite_gen(arr):
     yield from arr
     yield from infinite_gen(arr)
 
+def get_out(data_dict):
+    comments = infinite_gen(data_dict['comments'])
+    out_dict = data_dict.copy()
+    out_dict.pop('class')
+    out_dict.pop('comments')
+    return out_dict, comments
+
 def easy_fill(num, d, scores, comments):
     s = str(num)
     for p in scores[num]:
         d['q' + p] = s
         if 0 < num < 10:
             d[f'q{p}-comment'] = next(comments)
+
+def submit():
+    pass

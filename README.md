@@ -37,21 +37,15 @@ source env/bin/activate`
 
 Install requirements:
 
-`pip install -r requirements`
+`pip install -r bin/requirements.txt`
 
-Run faster.py or easy.py:
+Run main.py:
 
-`python3 faster.py` or `python3 easy.py`
-
-DO NOT touch the keyboard or mouse when 16Bot tells you not to. 16Bot controls your computer when self-grading, so if you mess it up, it may do random stuff on your computer. It's unlikely this will cause serious damage to your computer, but please listen to 16Bot.
-
-If you want to uninstall all the required dependencies that were installed, run:
-
-`pip uninstall -r requirements -y`
+`python3 src/main.py`
 
 ---------
 To edit your data (email, 16A vs 16B, etc.) open data.json and change the data as you wish, or alternatively, delete data.json using:
 
-`rm -rf data.json`
+`rm -rf bin/data.json`
 
-and run faster_grade.py again so that 16Bot can ask you for your information again.
+and run main.py again so that 16Bot can ask you for your information again.

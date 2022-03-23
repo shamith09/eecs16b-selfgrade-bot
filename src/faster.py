@@ -1,16 +1,10 @@
 from random import shuffle
-import json
+from json import dumps
 
 from utils import *
 
 # Default comments
-def faster():
-    default_comments = ['Calculation error', 'Misread question']
-
-    data_dict = ask_user(default_comments)
-    more_qs(data_dict)
-    parts = get_inputs(data_dict)
-
+def faster(data_dict, parts):
     shuffle(parts)
 
     print(f'There are {len(parts)} questions on this HW.')
@@ -18,10 +12,7 @@ def faster():
 
     num_incorrects = int(input('How many questions out of these do you want to give an 8/10? ').strip())
 
-    comments = infinite_gen(data_dict['comments'])
-    out_dict = data_dict.copy()
-    out_dict.pop('class')
-    out_dict.pop('comments')
+    out_dict, comments = get_out(data_dict)
 
     for p in parts[:-num_incorrects]:
         out_dict['q' + p] = "10"
@@ -31,7 +22,7 @@ def faster():
         out_dict[f'q{p}-comment'] = next(comments)
         
     with open(f'out/selfgrades-{data_dict["hwNum"]}.json', 'w') as out:
-        out.write(json.dumps(out_dict))
+        out.write(dumps(out_dict))
 
     print()
     print(f'Submit the selfgrades-{data_dict["hwNum"]}.json file in the out folder to Gradescope and you\'re done! Have a great day!\n')
