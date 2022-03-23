@@ -13,7 +13,7 @@ def faster(data_dict, parts):
     num_incorrects = int(input('How many questions out of these do you want to give an 8/10? ').strip())
     while num_incorrects <= len(parts):
         print(f'{red}Please enter a number that is <= {len(parts)}.{end}')
-    num_incorrects = int(input('How many questions out of these do you want to give an 8/10? ').strip())
+        num_incorrects = int(input('How many questions out of these do you want to give an 8/10? ').strip())
     
     out_dict, comments = get_out(data_dict)
 
