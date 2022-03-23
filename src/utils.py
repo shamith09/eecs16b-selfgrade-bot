@@ -71,7 +71,7 @@ def get_data(default_comments):
         'comments': default_comments
     })
 
-    with open('data.json', 'w') as data:
+    with open('bin/data.json', 'w') as data:
         data.write(dumps(d))
     
     return d
