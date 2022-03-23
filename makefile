@@ -4,3 +4,6 @@ setup:
 
 grade:
 	@python3 src/main.py
+
+dump:
+	@python3 src/dump.py

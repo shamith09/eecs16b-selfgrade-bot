@@ -11,7 +11,9 @@ faster.py is a __slightly unethical__ alternative which takes a very short amoun
 ---------
 Instructions:
 
-Clone the repo:
+Download the source code .zip file from https://github.com/shamith09/eecs16bot/releases/tag/v2.0 and unzip its contents, or
+
+Clone the repo in the Command Line:
 
 `git clone https://github.com/shamith09/eecs16b-selfgrade-bot.git`
 
@@ -46,3 +48,7 @@ To edit your data (email, 16A vs 16B, etc.) open data.json and change the data a
 `rm -rf bin/data.json`
 
 and run main.py again so that 16Bot can ask you for your information again.
+
+If you want to empty the out folder, use:
+
+`make dump`
