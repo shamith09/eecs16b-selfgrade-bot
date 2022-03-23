@@ -7,7 +7,6 @@ from utils import *
 def faster():
     default_comments = ['Calculation error', 'Misread question']
 
-    greet()
     data_dict = ask_user(default_comments)
     more_qs(data_dict)
     parts = get_inputs(data_dict)
