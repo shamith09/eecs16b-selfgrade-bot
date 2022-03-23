@@ -16,7 +16,7 @@ end = csi + '0m'
 
 def greet(ef):
     print('\nHello! My name is 16Bot, made by a lazy CS & Physics major named Shamith Pasula.')
-    print('I will be doing your 16A or 16B self-grade for you, giving you 8/10 on random questions to not be sus.')
+    print('I will be doing your 16A or 16B self-grade for you!')
     print('The comments for the incorrect questions are in data.json, edit them if you wish.')
     print('If this isn\'t your first time meeting me and you want to update your data, delete data.json and run the program again.')
     print('If you mess up or want to restart, press Ctrl+C and run the program again. \n')
