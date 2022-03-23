@@ -1,5 +1,5 @@
 import json, re
-from pyautogui import press, keyDown, keyUp
+from keyboard import press_and_release
 from platform import system
 from time import sleep
 from splinter import Browser
@@ -105,9 +105,7 @@ def more_qs(data_dict):
         close()
 
 def alt_tab():
-    keyDown(cmd_alt)
-    press('tab')
-    keyUp(cmd_alt)
+    press_and_release(cmd_alt, 'tab')
 
 def get_inputs(data_dict):
     print()
