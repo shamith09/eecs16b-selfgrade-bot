@@ -28,8 +28,4 @@ def easy(data_dict, parts):
     for n in scores:
         easy_fill(n, out_dict, scores, comments)
 
-    with open(f'out/selfgrades-{data_dict["hwNum"]}.json', 'w') as out:
-        out.write(dumps(out_dict))
-
-    print()
-    print(f'Submit the selfgrades-{data_dict["hwNum"]}.json file in the out folder to Gradescope and you\'re done! Have a great day!\n')
+    write(data_dict['hwNum'], out_dict)

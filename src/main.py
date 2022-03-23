@@ -13,13 +13,12 @@ if __name__ == '__main__':
         'faster': f'{red}faster{end}'
     }
 
-    greet()
-    print('Which program do you want to run? For more information, read the README.md file.')
-    print(f'Remember, {ef["easy"]} lets you grade yourself normally, but {ef["faster"]} might get you in trouble.')
-    print(f'1) {ef["easy"]}')
-    print(f'2) {ef["faster"]}')
+    greet(ef)
+    arg = input('Enter the number corresponding to your answer: ').strip()
+    while not (arg == '1' or arg == '2'):
+        print(f'{red}Please enter 1 or 2.{end}')
+        arg = input('Enter the number corresponding to your answer: ').strip()
 
-    arg = input('Enter the number corresponding to your answer: ')
     print()
     program = ef["easy"] if arg == '1' else ef["faster"]
     print(f'Running {program}...\n')
@@ -30,3 +29,4 @@ if __name__ == '__main__':
         easy(data_dict, parts)
     else:
         faster(data_dict, parts)
+    submit(data_dict['hwNum'])

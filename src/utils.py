@@ -13,12 +13,17 @@ cyan = csi + '36;1m'
 magenta = csi + '95;1m'
 end = csi + '0m'
 
-def greet():
+def greet(ef):
     print('\nHello! My name is 16Bot, made by a lazy CS & Physics major named Shamith Pasula.')
     print('I will be doing your 16A or 16B self-grade for you, giving you 8/10 on random questions to not be sus.')
     print('The comments for the incorrect questions are in data.json, edit them if you wish.')
     print('If this isn\'t your first time meeting me and you want to update your data, delete data.json and run the program again.')
     print('If you mess up or want to restart, press Ctrl+C and run the program again. \n')
+
+    print('Which program do you want to run? For more information, read the README.md file.')
+    print(f'Remember, {ef["easy"]} lets you grade yourself normally, but {ef["faster"]} might get you in trouble.')
+    print(f'1) {ef["easy"]}')
+    print(f'2) {ef["faster"]}')
 
 def ask_user(default_comments):
     try:
@@ -129,6 +134,8 @@ def infinite_gen(arr):
 def get_out(data_dict):
     comments = infinite_gen(data_dict['comments'])
     out_dict = data_dict.copy()
+    if (data_dict['class'] == '16B'):
+        out_dict.pop('hwNum')
     out_dict.pop('class')
     out_dict.pop('comments')
     return out_dict, comments
@@ -140,5 +147,10 @@ def easy_fill(num, d, scores, comments):
         if 0 < num < 10:
             d[f'q{p}-comment'] = next(comments)
 
-def submit():
-    pass
+def write(hw_num, out_dict):
+    with open(f'out/selfgrades-{hw_num}.json', 'w') as out:
+        out.write(dumps(out_dict))
+
+def submit(hw_num):
+    print()
+    print(f'Submit the selfgrades-{hw_num}.json file in the out folder to https://gradescope.com and you\'re done! Have a great day!\n')

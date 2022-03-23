@@ -21,8 +21,4 @@ def faster(data_dict, parts):
         out_dict['q' + p] = "8"
         out_dict[f'q{p}-comment'] = next(comments)
         
-    with open(f'out/selfgrades-{data_dict["hwNum"]}.json', 'w') as out:
-        out.write(dumps(out_dict))
-
-    print()
-    print(f'Submit the selfgrades-{data_dict["hwNum"]}.json file in the out folder to Gradescope and you\'re done! Have a great day!\n')
+    write(data_dict['hwNum'], out_dict)
