@@ -19,30 +19,26 @@ Go into the repo folder:
 
 `cd eecs16bot`
 
-Install Python:
+Install Python and pip if you haven't already:
+
 https://www.python.org/downloads/
 
----------
-### Optional: Use a virtual environment to keep dependencies in the cloned repository:
-Install virtualenv:
-
-`pip install virtualenv`
-
-Initialize the virtualenv and activate it:
-
-`python3 -m venv env`
-
-`source env/bin/activate`
+https://pip.pypa.io/en/stable/installation/
 
 ---------
+Setup using:
 
-Install requirements:
+`make setup`
 
-`pip install -r bin/requirements.txt`
+Run the program using:
 
-Run main.py:
+`make grade`
 
-`python3 src/main.py`
+---------
+If make doesn't work, use:
+
+`pip install -r bin/requirements.txt` to setup and
+`python3 src/main.py` to run.
 
 ---------
 To edit your data (email, 16A vs 16B, etc.) open data.json and change the data as you wish, or alternatively, delete data.json using:
