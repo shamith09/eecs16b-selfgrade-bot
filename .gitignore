@@ -2,3 +2,4 @@ bin/data.json
 env/
 src/__pycache__
 .DS_Store
+out/

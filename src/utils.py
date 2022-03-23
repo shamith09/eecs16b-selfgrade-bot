@@ -2,6 +2,7 @@ from json import load, dumps
 from platform import system
 from re import findall
 from requests import get
+from os import mkdir
 
 cmd_alt = 'command' if system() == 'Darwin' else 'alt'
 
@@ -148,6 +149,10 @@ def easy_fill(num, d, scores, comments):
             d[f'q{p}-comment'] = next(comments)
 
 def write(hw_num, out_dict):
+    try:
+        mkdir('./out')
+    except:
+        pass
     with open(f'out/selfgrades-{hw_num}.json', 'w') as out:
         out.write(dumps(out_dict))
 
