@@ -149,8 +149,6 @@ def infinite_gen(arr):
 def get_out(data_dict):
     comments = infinite_gen(data_dict['comments'])
     out_dict = data_dict.copy()
-    if (data_dict['class'] == '16B'):
-        out_dict.pop('hwNum')
     out_dict.pop('class')
     out_dict.pop('comments')
     return out_dict, comments
