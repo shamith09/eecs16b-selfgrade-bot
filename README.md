@@ -11,7 +11,7 @@ faster.py is a __slightly unethical__ alternative which takes a very short amoun
 ---------
 Instructions:
 
-Download the source code .zip file from https://github.com/shamith09/eecs16bot/releases/tag/v2.0.0 and unzip its contents, then start a command line (Terminal) in the new folder, or:
+Download the source code .zip file from https://github.com/shamith09/eecs16bot/releases/tag/v2.0.1 and unzip its contents, then start a command line (Terminal) in the new folder, or:
 
 Clone the repo in the Command Line:
 
