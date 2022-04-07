@@ -15,7 +15,8 @@ magenta = csi + '95;1m'
 end = csi + '0m'
 
 def greet(ef):
-    print('\nHello! My name is 16Bot, made by a lazy CS & Physics major named Shamith Pasula.')
+    print(f'{cyan}________________________________________________________________________________{end}\n')
+    print('Hello! My name is 16Bot, made by a lazy CS & Physics major named Shamith Pasula.')
     print('I will be doing your 16A or 16B self-grade for you!')
     print('The comments for the incorrect questions are in data.json, edit them if you wish.')
     print('If this isn\'t your first time meeting me and you want to update your data, delete data.json and run the program again.')
@@ -171,3 +172,4 @@ def write(hw_num, out_dict):
 def submit(hw_num):
     print()
     print(f'Submit the selfgrades-{hw_num}.json file in the out folder to https://gradescope.com and you\'re done! Have a great day!\n')
+    print(f'{cyan}________________________________________________________________________________{end}\n')
