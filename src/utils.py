@@ -171,5 +171,5 @@ def write(hw_num, out_dict):
 
 def submit(hw_num):
     print()
-    print(f'Submit the selfgrades-{hw_num}.json file in the out folder to https://gradescope.com and you\'re done! Have a great day!\n')
+    print(f'Submit the selfgrades-{hw_num}.json file in the out folder to {cyan}https://gradescope.com{end} and you\'re done! Have a great day!\n')
     print(f'{cyan}________________________________________________________________________________{end}\n')
